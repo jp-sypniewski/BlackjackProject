@@ -8,8 +8,29 @@ public class BlackjackHand extends Hand {
 
 	@Override
 	public int getHandValue() {
-		// TODO Auto-generated method stub
-		return 0;
+		int value = 0;
+		for (Card card : hand) {
+			value += card.getValue();
+		}
+		return value;
+	}
+	
+	public boolean isBlackjack() {
+		if (getHandValue() == 21) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+	
+	public boolean isBust() {
+		if (getHandValue() > 21) {
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 
 }
