@@ -30,6 +30,7 @@ public class SinglePlayerBlackjackApp {
 					input = kb.nextInt();
 					if (input == 1) {
 						hand.clear();
+						redealIfNeeded();
 						hand = new BlackjackHand(deck);
 						break;
 					} else {
@@ -46,6 +47,7 @@ public class SinglePlayerBlackjackApp {
 						hand.addCard(deck.dealCard());
 					} else if (input == 2) {
 						hand.clear();
+						redealIfNeeded();
 						hand = new BlackjackHand(deck);
 						break;
 					} else {
@@ -63,6 +65,7 @@ public class SinglePlayerBlackjackApp {
 				input = kb.nextInt();
 				if (input == 1) {
 					hand.clear();
+					redealIfNeeded();
 					hand = new BlackjackHand(deck);
 				} else {
 					quit = false;
@@ -80,11 +83,20 @@ public class SinglePlayerBlackjackApp {
 		}
 		System.out.println("Score: " + hand.getHandValue());
 	}
-	
+
 	public void blackjackOrBustSysOut() {
 		System.out.println("How would you like to proceed?");
 		System.out.println("1: Deal again");
 		System.out.println("2: Quit");
+	}
+
+	public void redealIfNeeded() {
+		if (deck.cardsLeftInDeck() < 9) {
+			deck = new Deck();
+			System.out.println("Got a new deck!");
+		} else {
+			System.out.println("We have " + deck.cardsLeftInDeck() + " cards left in the deck");
+		}
 	}
 
 }
