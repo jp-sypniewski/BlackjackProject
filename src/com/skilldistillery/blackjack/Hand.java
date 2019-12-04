@@ -31,6 +31,8 @@ public abstract class Hand {
 		return "Hand \nHand=" + hand;
 	}
 	
-	
+	public List<Card> getHand() {
+		return hand;
+	}
 
 }

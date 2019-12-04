@@ -2,8 +2,9 @@ package com.skilldistillery.blackjack;
 
 public class BlackjackHand extends Hand {
 
-	public BlackjackHand() {
-		// TODO Auto-generated constructor stub
+	public BlackjackHand(Deck deck) {
+		addCard(deck.dealCard());
+		addCard(deck.dealCard());
 	}
 
 	@Override
