@@ -59,6 +59,7 @@ public class SinglePlayerBlackjackApp {
 				showHand();
 
 			}
+			
 			if (hand.isBust()) {
 				System.out.println("You busted!");
 				blackjackOrBustSysOut();
