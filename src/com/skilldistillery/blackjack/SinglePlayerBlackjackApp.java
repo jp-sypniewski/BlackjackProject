@@ -26,9 +26,7 @@ public class SinglePlayerBlackjackApp {
 			while (!hand.isBust()) {
 				if (hand.isBlackjack()) {
 					System.out.println("BLACKJACK!");
-					System.out.println("Select an option:");
-					System.out.println("1: Deal again");
-					System.out.println("2: Quit");
+					blackjackOrBustSysOut();
 					input = kb.nextInt();
 					if (input == 1) {
 						hand.clear();
@@ -61,9 +59,7 @@ public class SinglePlayerBlackjackApp {
 			}
 			if (hand.isBust()) {
 				System.out.println("You busted!");
-				System.out.println("How would you like to proceed?");
-				System.out.println("1: Deal again");
-				System.out.println("2: Quit");
+				blackjackOrBustSysOut();
 				input = kb.nextInt();
 				if (input == 1) {
 					hand.clear();
@@ -83,6 +79,12 @@ public class SinglePlayerBlackjackApp {
 			System.out.println(card);
 		}
 		System.out.println("Score: " + hand.getHandValue());
+	}
+	
+	public void blackjackOrBustSysOut() {
+		System.out.println("How would you like to proceed?");
+		System.out.println("1: Deal again");
+		System.out.println("2: Quit");
 	}
 
 }

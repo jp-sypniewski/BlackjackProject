@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Hand {
-	List<Card> hand;
+	protected List<Card> hand;
 	
 	{
 		hand = new ArrayList<Card>();
