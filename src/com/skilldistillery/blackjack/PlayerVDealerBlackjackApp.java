@@ -20,6 +20,7 @@ public class PlayerVDealerBlackjackApp {
 		deck = new Deck();
 		freshDeal();
 		boolean playerGotBlackjack;
+		boolean dealerGotBlackjack;
 
 		do {
 			playerGotBlackjack = false;
@@ -29,7 +30,11 @@ public class PlayerVDealerBlackjackApp {
 			//TODO add function if dealer is dealt blackjack
 
 			// player actions
+			
 			while (!playerHand.isBust()) {
+				
+				// player dealt blackjack check
+				
 				if (playerHand.isBlackjack()) {
 					System.out.println("BLACKJACK! You win!");
 					playerGotBlackjack = true;
@@ -43,6 +48,9 @@ public class PlayerVDealerBlackjackApp {
 						continuePlaying = false;
 						break;
 					}
+					
+					// player add card actions, 
+					
 				} else {
 					System.out.println("How would you like to proceed?");
 					System.out.println("1: Hit");
@@ -59,7 +67,11 @@ public class PlayerVDealerBlackjackApp {
 			}
 
 			// player actions done
+			
 			if (continuePlaying && !playerGotBlackjack) {
+				
+				// player busts, no need for dealer checks
+				
 				if (playerHand.isBust()) {
 					System.out.println("You busted! Dealer wins!");
 					blackjackOrBustSysOut();
@@ -72,14 +84,22 @@ public class PlayerVDealerBlackjackApp {
 						continuePlaying = false;
 					}
 				}
+				
 				// dealer actions
+				
 				else {
+					
+					// dealer adds cards based on rules
+					
 					while (dealerHand.getHandValue() < 17 && !dealerHand.isBust()) {
 						System.out.println("Dealer draws...");
 						dealerHand.addCard(deck.dealCard());
 						System.out.println("The dealer is at: " + dealerHand.getHandValue());
 						
 					}
+					
+					// dealer bust actions
+					
 					if (dealerHand.isBust()) {
 						System.out.println("Dealer busts! You win!");
 						blackjackOrBustSysOut();
@@ -91,6 +111,9 @@ public class PlayerVDealerBlackjackApp {
 							continuePlaying = false;
 						}
 					} else {
+						
+						// hand comparisons where neither player busts
+						
 						int diff = playerHand.getHandValue() - dealerHand.getHandValue();
 						if (diff > 0) {
 							System.out.println("You win!");
@@ -109,11 +132,12 @@ public class PlayerVDealerBlackjackApp {
 						}
 					}
 				}
-
 			}
-
 		} while (continuePlaying);
-	}
+		
+	}  // end run()
+	
+	
 
 	public void showPlayerHand() {
 		System.out.println("Your hand is:");
