@@ -36,6 +36,8 @@ public class PlayerVDealerBlackjackApp {
 			
 			while (!playerHand.isBust()) {
 				
+				// checks for dealer blackjack
+				
 				if (dealerHand.isBlackjack()) {
 					showFullDealerHand();
 					dealerGotBlackjack = true;
@@ -130,6 +132,7 @@ public class PlayerVDealerBlackjackApp {
 					while (dealerHand.getHandValue() < 17 && !dealerHand.isBust()) {
 						System.out.println("Dealer draws...");
 						dealerHand.addCard(deck.dealCard());
+						System.out.println(dealerHand.getHand().get(dealerHand.getHand().size()-1));
 						System.out.println("The dealer is at: " + dealerHand.getHandValue());
 						
 					}
