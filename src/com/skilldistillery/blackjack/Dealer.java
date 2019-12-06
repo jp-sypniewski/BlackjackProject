@@ -3,11 +3,18 @@ package com.skilldistillery.blackjack;
 public class Dealer {
 	private BlackjackHand hand;
 	private Deck deck;
-	// private boolean softAce;
+	private int numDecks = 6;
+	private boolean softAce;
 
 	public Dealer() {
 		hand = new BlackjackHand();
 		deck = new Deck(6);
+	}
+
+	public Dealer(int numDecks) {
+		hand = new BlackjackHand();
+		this.numDecks = numDecks;
+		deck = new Deck(numDecks);
 	}
 
 	public void deal(Player player) {
@@ -32,7 +39,11 @@ public class Dealer {
 	}
 
 	public int dealerHandValue() {
-		return hand.getHandValue();
+		if (softAce) {
+			return hand.getHandValue();
+		} else {
+			return hand.getHandValue();
+		}
 	}
 
 	public boolean dealerBusts() {
@@ -66,8 +77,8 @@ public class Dealer {
 	}
 
 	public void newDeckCheck() {
-		if (deck.cardsLeftInDeck() < 104) {
-			deck = new Deck(6);
+		if (deck.cardsLeftInDeck() < numDecks * 52 / 5) {
+			deck = new Deck(numDecks);
 		}
 	}
 
