@@ -40,7 +40,7 @@ public class BlackjackApp {
 				comparisonOfHands = false;
 			} else {
 				
-				while (!player.playerBusts()) {
+				while (!player.playerBusts() && dealer.dealerHandValue()!=21) {
 					System.out.println("How would player like to proceed?");
 					System.out.println("1: Hit");
 					System.out.println("2: Stay");
@@ -88,20 +88,15 @@ public class BlackjackApp {
 				}
 			}
 
-			System.out.println("Gonna keep sitting there?  It's like 9 am the next day already...");
-			System.out.println("1: Sure!  What is time anyway?");
-			System.out.println("2: Do I at least get a free buffet ticket?");
-			System.out.println("3: Thanks for the time, catch ya on the flip side");
+			System.out.println("Play again?");
+			System.out.println("1: Sure!");
+			System.out.println("2: Nah.");
 			input = kb.nextInt();
 			if (input == 1) {
 				System.out.println("Sounds good.");
 			}
-			if (input == 2) {
-				System.out.println("No. Bye.");
-				player.playerQuits();
-				kb.close();
-			} else if (input == 3) {
-				System.out.println("MGM thanks you!");
+			else if (input == 2) {
+				System.out.println("Bye.");
 				player.playerQuits();
 				kb.close();
 			}

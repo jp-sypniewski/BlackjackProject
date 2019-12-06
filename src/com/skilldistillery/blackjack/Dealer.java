@@ -4,7 +4,7 @@ public class Dealer {
 	private BlackjackHand hand;
 	private Deck deck;
 	private int numDecks = 6;
-	private boolean softAce;
+	private boolean aceIsOne;
 
 	public Dealer() {
 		hand = new BlackjackHand();
@@ -39,15 +39,36 @@ public class Dealer {
 	}
 
 	public int dealerHandValue() {
-		if (softAce) {
+		if (!aceIsOne) {
 			return hand.getHandValue();
 		} else {
-			return hand.getHandValue();
+			return dealerHandValueWithAceAsOne();
 		}
+	}
+	
+	public int dealerHandValueWithAceAsOne() {
+		int aceCount = 0;
+		for (Card card : hand.getHand()) {
+			if (card.getValue() == 11) {
+				aceCount++;
+			}
+		}
+		int newHandValue = hand.getHandValue() - aceCount * 10;
+		return newHandValue;
 	}
 
 	public boolean dealerBusts() {
-		return hand.isBust();
+		if (hand.isBust()) {
+			if (dealerHandValueWithAceAsOne() <= 21) {
+				aceIsOne = true;
+				return false;
+			}
+			else {
+				return hand.isBust();
+			}
+		} else {
+			return hand.isBust();
+		}
 	}
 
 	public void printHand() {
@@ -73,6 +94,7 @@ public class Dealer {
 	}
 
 	public void clearHand() {
+		aceIsOne = false;
 		hand.clear();
 	}
 
