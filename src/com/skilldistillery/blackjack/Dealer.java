@@ -39,14 +39,30 @@ public class Dealer {
 	}
 
 	public int dealerHandValue() {
+		dealerBusts();
 		if (!aceIsOne) {
 			return hand.getHandValue();
 		} else {
-			return dealerHandValueWithAceAsOne();
+			return dealerHandValueWithAcesAsOnes();
 		}
 	}
-	
-	public int dealerHandValueWithAceAsOne() {
+
+	public boolean hasSoftSeventeen() {
+		int aceCount = 0;
+		for (Card card : hand.getHand()) {
+			if (card.getValue() == 11) {
+				aceCount++;
+			}
+		}
+
+		if (aceCount != 0 && hand.getHandValue() == 17) {
+			return true;
+		}
+
+		return false;
+	}
+
+	public int dealerHandValueWithAcesAsOnes() {
 		int aceCount = 0;
 		for (Card card : hand.getHand()) {
 			if (card.getValue() == 11) {
@@ -59,11 +75,10 @@ public class Dealer {
 
 	public boolean dealerBusts() {
 		if (hand.isBust()) {
-			if (dealerHandValueWithAceAsOne() <= 21) {
+			if (dealerHandValueWithAcesAsOnes() <= 21) {
 				aceIsOne = true;
 				return false;
-			}
-			else {
+			} else {
 				return hand.isBust();
 			}
 		} else {
@@ -79,8 +94,8 @@ public class Dealer {
 				System.out.println(card);
 			}
 		} else {
+			System.out.println("One card face down and...");
 			System.out.println(hand.getHand().get(1));
-			System.out.println("And one face down...");
 		}
 		System.out.println("----------");
 	}

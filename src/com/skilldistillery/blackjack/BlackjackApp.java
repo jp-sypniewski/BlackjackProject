@@ -65,7 +65,7 @@ public class BlackjackApp {
 			if (dealerMustPlay) {
 
 				dealer.printFullHand();
-				while (dealer.dealerHandValue() < 17) {
+				while (dealer.dealerHandValue() < 17 || dealer.hasSoftSeventeen()) {
 					System.out.println("Dealer must hit.");
 					System.out.println(dealer.dealerHits());
 					System.out.println("Dealer is now at: " + dealer.dealerHandValue());
