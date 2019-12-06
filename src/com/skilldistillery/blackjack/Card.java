@@ -44,7 +44,7 @@ public class Card {
 
 	@Override
 	public String toString() {
-		return "Card \nSuit=" + suit + "\nRank=" + rank;
+		return "Card\nRank=" + rank +" \nSuit=" + suit;
 	}
 
 	@Override
