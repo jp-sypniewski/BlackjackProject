@@ -1,7 +1,7 @@
 package com.skilldistillery.blackjack;
 
 public class Player {
-	BlackjackHand hand;
+	private BlackjackHand hand;
 	
 	public Player() {
 		hand = new BlackjackHand();
@@ -17,6 +17,10 @@ public class Player {
 	
 	public void clearHand() {
 		hand.clear();
+	}
+	
+	public void takeCard(Card card) {
+		hand.addCard(card);
 	}
 
 }

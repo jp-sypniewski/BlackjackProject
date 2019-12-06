@@ -9,6 +9,13 @@ public class Dealer {
 		deck = new Deck(6);
 	}
 	
+	public void deal(Player player) {
+		for(int i = 0; i < 2; i++) {
+			player.takeCard(deck.dealCard());
+			hand.addCard(deck.dealCard());
+		}
+	}
+	
 	public void printDeal() {
 		System.out.println("----------");
 		if (hand.getHand().get(1).getValue() >= 10) {
@@ -30,6 +37,10 @@ public class Dealer {
 	
 	public void clearHand() {
 		hand.clear();
+	}
+	
+	public void newDeck() {
+		deck = new Deck(6);
 	}
 
 }
