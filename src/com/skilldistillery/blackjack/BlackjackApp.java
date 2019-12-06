@@ -113,7 +113,7 @@ public class BlackjackApp {
 
 		dealer.deal(player);
 
-		dealer.printHand();
+		dealer.printHandAfterDeal();
 		player.printHand();
 	}
 	

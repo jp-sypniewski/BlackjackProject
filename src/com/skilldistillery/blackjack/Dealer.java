@@ -54,11 +54,9 @@ public class Dealer {
 				aceCount++;
 			}
 		}
-
 		if (aceCount != 0 && hand.getHandValue() == 17) {
 			return true;
 		}
-
 		return false;
 	}
 
@@ -86,7 +84,7 @@ public class Dealer {
 		}
 	}
 
-	public void printHand() {
+	public void printHandAfterDeal() {
 		System.out.println("----------");
 		System.out.println("Dealer hand:");
 		if (hand.getHand().get(1).getValue() >= 10) {
