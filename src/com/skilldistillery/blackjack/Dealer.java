@@ -1,8 +1,9 @@
 package com.skilldistillery.blackjack;
 
 public class Dealer {
-	BlackjackHand hand;
-	Deck deck;
+	private BlackjackHand hand;
+	private Deck deck;
+	private boolean softAce;
 	
 	public Dealer() {
 		hand = new BlackjackHand();
@@ -16,8 +17,21 @@ public class Dealer {
 		}
 	}
 	
+	public void playerHits(Player player) {
+		player.takeCard(deck.dealCard());
+	}
+	
+	public void dealerHits() {
+		hand.addCard(deck.dealCard());
+	}
+	
+	public int dealerHandValue() {
+		return hand.getHandValue();
+	}
+	
 	public void printDeal() {
 		System.out.println("----------");
+		System.out.println("Dealer hand:");
 		if (hand.getHand().get(1).getValue() >= 10) {
 			printFullHand();
 		}
