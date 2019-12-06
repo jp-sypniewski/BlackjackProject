@@ -147,6 +147,8 @@ public class PlayerVDealerBlackjackApp {
 		System.out.println("Score: " + playerHand.getHandValue());
 	}
 
+	
+	//update this method to show as appropriate
 	public void showDealerHand() {
 		System.out.println("The dealer hand is:");
 		for (Card card : dealerHand.getHand()) {
