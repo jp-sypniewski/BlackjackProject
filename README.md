@@ -7,7 +7,7 @@
 This project provides three Blackjack application classes for slightly different versions of the card game:
 - SinglePlayerBlackjackApp - one player with a single deck of cards
 - PlayerVDealerBlackjackApp - one player with a dealer, with a single deck of cards
-- BlackjackApp - one player with a dealer, playing with multiple decks, dealer capable of acting on soft aces
+- BlackjackApp - one player with a dealer, playing with multiple decks, dealer only shows one card at initial deal (unless showing card is ace/face/ten), dealer capable of acting on soft aces
 
 Each App class prompts the player for their choice of hit or stay for a given hand, and allows a player to quit out after each hand.  The deck of cards shrinks in size with each hand, and reforms and shuffles automatically should the deck shrink down to a certain size.
 
@@ -31,7 +31,6 @@ Each App class prompts the player for their choice of hit or stay for a given ha
 
 #### Lessons Learned
 
-- Visibility of fields
 - Importance of refactoring/readability
   - The logic required for just the player has repetition with slight changes, so keeping the code "dry" allows for easier reading of the run() method within the app
     - In moving from the PlayerVDealerBlackjackApp to the BlackjackApp, classes for a Player and a Dealer were added.  These two classes contain functionality previously within the run() method.  The logic of the game within the run() in BlackjackApp is easier to follow as a result.
