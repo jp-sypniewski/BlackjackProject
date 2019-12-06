@@ -28,7 +28,6 @@ public class PlayerVDealerBlackjackApp {
 			showStartDealerHand();
 			showPlayerHand();
 			
-			//TODO add function if dealer is dealt blackjack
 			
 			
 
@@ -38,6 +37,7 @@ public class PlayerVDealerBlackjackApp {
 			while (!playerHand.isBust()) {
 				
 				if (dealerHand.isBlackjack()) {
+					showFullDealerHand();
 					dealerGotBlackjack = true;
 					if (playerHand.isBlackjack()) {
 						System.out.println("Dealer and player blackjack - push!");
@@ -54,6 +54,16 @@ public class PlayerVDealerBlackjackApp {
 					}
 					else {
 						System.out.println("Dealer blackjack...player loses...");
+						blackjackOrBustSysOut();
+						input = kb.nextInt();
+						if (input == 1) {
+							clearHands();
+							freshDeal();
+							break;
+						} else {
+							continuePlaying = false;
+							break;
+						}
 					}
 				}
 				
