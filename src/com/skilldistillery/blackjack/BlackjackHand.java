@@ -2,6 +2,10 @@ package com.skilldistillery.blackjack;
 
 public class BlackjackHand extends Hand {
 
+	public BlackjackHand() {
+		
+	}
+	
 	public BlackjackHand(Deck deck) {
 		addCard(deck.dealCard());
 		addCard(deck.dealCard());

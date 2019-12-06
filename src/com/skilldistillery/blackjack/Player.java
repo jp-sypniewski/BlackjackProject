@@ -1,19 +1,22 @@
 package com.skilldistillery.blackjack;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class Player {
-	List<Card> hand;
+	BlackjackHand hand;
 	
 	public Player() {
-		hand = new ArrayList<Card>();
+		hand = new BlackjackHand();
 	}
 	
 	public void printHand() {
-		for (Card card : hand) {
+		System.out.println("----------");
+		for (Card card : hand.getHand()) {
 			System.out.println(card);
 		}
+		System.out.println("----------");
+	}
+	
+	public void clearHand() {
+		hand.clear();
 	}
 
 }
