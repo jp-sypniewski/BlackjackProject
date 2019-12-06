@@ -24,19 +24,43 @@ public class PlayerVDealerBlackjackApp {
 
 		do {
 			playerGotBlackjack = false;
+			dealerGotBlackjack = false;
 			showStartDealerHand();
 			showPlayerHand();
 			
 			//TODO add function if dealer is dealt blackjack
+			
+			
+
 
 			// player actions
 			
 			while (!playerHand.isBust()) {
 				
+				if (dealerHand.isBlackjack()) {
+					dealerGotBlackjack = true;
+					if (playerHand.isBlackjack()) {
+						System.out.println("Dealer and player blackjack - push!");
+						blackjackOrBustSysOut();
+						input = kb.nextInt();
+						if (input == 1) {
+							clearHands();
+							freshDeal();
+							break;
+						} else {
+							continuePlaying = false;
+							break;
+						}
+					}
+					else {
+						System.out.println("Dealer blackjack...player loses...");
+					}
+				}
+				
 				// player dealt blackjack check
 				
 				if (playerHand.isBlackjack()) {
-					System.out.println("BLACKJACK! You win!");
+					System.out.println("BLACKJACK! Player wins!");
 					playerGotBlackjack = true;
 					blackjackOrBustSysOut();
 					input = kb.nextInt();
@@ -52,13 +76,13 @@ public class PlayerVDealerBlackjackApp {
 					// player add card actions, 
 					
 				} else {
-					System.out.println("How would you like to proceed?");
+					System.out.println("How would player like to proceed?");
 					System.out.println("1: Hit");
 					System.out.println("2: Stay");
 					input = kb.nextInt();
 					if (input == 1) {
 						playerHand.addCard(deck.dealCard());
-						System.out.println("You are now at: " + playerHand.getHandValue());
+						System.out.println("Player is now at: " + playerHand.getHandValue());
 					} else {
 						break;
 					}
@@ -68,12 +92,12 @@ public class PlayerVDealerBlackjackApp {
 
 			// player actions done
 			
-			if (continuePlaying && !playerGotBlackjack) {
+			if (continuePlaying && !playerGotBlackjack && !dealerGotBlackjack) {
 				
 				// player busts, no need for dealer checks
 				
 				if (playerHand.isBust()) {
-					System.out.println("You busted! Dealer wins!");
+					System.out.println("Player busted! Dealer wins!");
 					blackjackOrBustSysOut();
 					input = kb.nextInt();
 					if (input == 1) {
@@ -103,7 +127,7 @@ public class PlayerVDealerBlackjackApp {
 					// dealer bust actions
 					
 					if (dealerHand.isBust()) {
-						System.out.println("Dealer busts! You win!");
+						System.out.println("Dealer busts! Player wins!");
 						blackjackOrBustSysOut();
 						input = kb.nextInt();
 						if (input == 1) {
@@ -118,7 +142,7 @@ public class PlayerVDealerBlackjackApp {
 						
 						int diff = playerHand.getHandValue() - dealerHand.getHandValue();
 						if (diff > 0) {
-							System.out.println("You win!");
+							System.out.println("Player wins!");
 						} else if (diff < 0) {
 							System.out.println("Dealer wins!");
 						} else {
@@ -142,7 +166,7 @@ public class PlayerVDealerBlackjackApp {
 	
 
 	public void showPlayerHand() {
-		System.out.println("Your hand is:");
+		System.out.println("Player hand is:");
 		for (Card card : playerHand.getHand()) {
 			System.out.println(card);
 		}
@@ -164,7 +188,7 @@ public class PlayerVDealerBlackjackApp {
 	}
 
 	public void blackjackOrBustSysOut() {
-		System.out.println("How would you like to proceed?");
+		System.out.println("How would player like to proceed?");
 		System.out.println("1: Deal again");
 		System.out.println("2: Quit");
 	}
