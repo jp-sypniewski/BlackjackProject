@@ -24,7 +24,7 @@ public class PlayerVDealerBlackjackApp {
 
 		do {
 			playerGotBlackjack = false;
-			showDealerHand();
+			showStartDealerHand();
 			showPlayerHand();
 			
 			//TODO add function if dealer is dealt blackjack
@@ -91,6 +91,8 @@ public class PlayerVDealerBlackjackApp {
 					
 					// dealer adds cards based on rules
 					
+					showFullDealerHand();
+					
 					while (dealerHand.getHandValue() < 17 && !dealerHand.isBust()) {
 						System.out.println("Dealer draws...");
 						dealerHand.addCard(deck.dealCard());
@@ -120,7 +122,7 @@ public class PlayerVDealerBlackjackApp {
 						} else if (diff < 0) {
 							System.out.println("Dealer wins!");
 						} else {
-							System.out.println("A tie!");
+							System.out.println("Push!");
 						}
 						blackjackOrBustSysOut();
 						input = kb.nextInt();
@@ -149,12 +151,16 @@ public class PlayerVDealerBlackjackApp {
 
 	
 	//update this method to show as appropriate
-	public void showDealerHand() {
+	public void showFullDealerHand() {
 		System.out.println("The dealer hand is:");
 		for (Card card : dealerHand.getHand()) {
 			System.out.println(card);
 		}
 		System.out.println("Score: " + dealerHand.getHandValue());
+	}
+	public void showStartDealerHand() {
+		System.out.println("The dealer hand is:");
+		System.out.println(dealerHand.getHand().get(1));
 	}
 
 	public void blackjackOrBustSysOut() {
