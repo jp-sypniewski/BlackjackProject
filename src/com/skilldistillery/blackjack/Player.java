@@ -3,7 +3,7 @@ package com.skilldistillery.blackjack;
 public class Player {
 	private BlackjackHand hand;
 	private boolean continuePlaying;
-	private boolean softAce;
+	// private boolean softAce;
 	
 	public Player() {
 		hand = new BlackjackHand();
@@ -14,12 +14,17 @@ public class Player {
 		return hand.getHandValue();
 	}
 	
+	public boolean playerBusts() {
+		return hand.isBust();
+	}
+	
 	public void printHand() {
 		System.out.println("----------");
 		System.out.println("Player hand:");
 		for (Card card : hand.getHand()) {
 			System.out.println(card);
 		}
+		System.out.println("Hand total is: " + playerHandValue());
 		System.out.println("----------");
 	}
 	
