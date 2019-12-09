@@ -5,6 +5,7 @@ public class Dealer {
 	private Deck deck;
 	private int numDecks = 6;
 	private boolean aceIsOne;
+	private boolean handDone = false;
 
 	public Dealer() {
 		hand = new BlackjackHand();
@@ -124,6 +125,18 @@ public class Dealer {
 		if (deck.cardsLeftInDeck() < numDecks * 52 / 5) {
 			deck = new Deck(numDecks);
 		}
+	}
+	
+	public boolean getHandDone() {
+		return handDone;
+	}
+	
+	public void handIsDone() {
+		handDone = true;
+	}
+	
+	public void resetHandIsDone() {
+		handDone = false;
 	}
 
 }

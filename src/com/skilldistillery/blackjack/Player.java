@@ -6,6 +6,7 @@ public class Player {
 	private boolean continuePlaying;
 	private boolean softAce = false;
 	private static int idCount = 0;
+	private boolean handDone = false;
 
 	public Player() {
 		hand = new BlackjackHand();
@@ -54,6 +55,18 @@ public class Player {
 	
 	public int getId() {
 		return id;
+	}
+	
+	public boolean getHandDone() {
+		return handDone;
+	}
+	
+	public void handIsDone() {
+		handDone = true;
+	}
+	
+	public void resetHandIsDone() {
+		handDone = false;
 	}
 
 }

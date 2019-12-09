@@ -32,9 +32,9 @@ public class BlackjackAppMultiplayer {
 			if (table.getDealer().dealerHandValue() == 21) {
 
 				System.out.println("Dealer has Blackjack.");
+				table.getDealer().handIsDone();
 
 				for (Player player : table.getPlayersList()) {
-
 
 					if (player.playerHandValue() == 21) {
 						System.out.println("Player " + player.getId() + ": Push");
@@ -42,18 +42,18 @@ public class BlackjackAppMultiplayer {
 						System.out.println("Player " + player.getId() + ": Loss");
 					}
 				}
-				gameMustContinue = false;
 			}
 
-			if (gameMustContinue) {
+			if (!table.getDealer().getHandDone()) {
 				for (Player player : table.getPlayersList()) {
-					
+
 					// check player blackjack
-					
+
 					if (player.playerHandValue() == 21) {
 						System.out.println("Player " + player.getId() + ": Blackjack!");
+						player.handIsDone();
 					} else {
-						
+
 						// or player gets to hit until bust
 
 						while (!player.playerBusts()) {
@@ -86,6 +86,7 @@ public class BlackjackAppMultiplayer {
 
 							if (player.playerBusts()) {
 								System.out.println("Player " + player.getId() + " busts.");
+								player.handIsDone();
 								break;
 							}
 						}
@@ -100,7 +101,7 @@ public class BlackjackAppMultiplayer {
 			if (table.playerMustCompareToDealer()) {
 
 				table.getDealer().printFullHand();
-				while (dealer.dealerHandValue() < 17 || table.getDealer().hasSoftSeventeen()) {
+				while (table.getDealer().dealerHandValue() < 17 || table.getDealer().hasSoftSeventeen()) {
 					System.out.println("Dealer must hit.");
 					System.out.println(table.getDealer().dealerHits());
 					System.out.println("Dealer is now at: " + table.getDealer().dealerHandValue());
@@ -109,23 +110,33 @@ public class BlackjackAppMultiplayer {
 				// check dealer bust after hit
 
 				if (table.getDealer().dealerBusts()) {
-					
-					// TODO can provide win condition to non-blackjack non-busted players here
-					
+					table.getDealer().handIsDone();
+					for (Player player : table.getPlayersList()) {
+						if (!player.getHandDone()) {
+							System.out.println("Since dealer busted, player " + player.getId() + " wins.");
+						}
+					}
 				}
 			}
 
 			// if (neither dealer nor player blackjack, neither player bust)
 			// compare hand values to determine winner
 
-			if (gameMustContinue) {
-				System.out.println("Dealer: " + dealer.dealerHandValue() + "\tPlayer: " + player.playerHandValue());
-				if (dealer.dealerHandValue() == player.playerHandValue()) {
-					System.out.println("Push");
-				} else if (dealer.dealerHandValue() > player.playerHandValue()) {
-					System.out.println("Dealer wins.");
-				} else {
-					System.out.println("Player wins!");
+			if (table.playerMustCompareToDealer()) {
+				
+				System.out.println("Dealer: " + table.getDealer().dealerHandValue());
+				
+				for (Player player : table.getPlayersList()) {
+
+					System.out.println("Player "+player.getId()+": " + player.playerHandValue());
+					if (table.getDealer().dealerHandValue() == player.playerHandValue()) {
+						System.out.println("Push");
+					} else if (table.getDealer().dealerHandValue() > player.playerHandValue()) {
+						System.out.println("Dealer wins.");
+					} else {
+						System.out.println("Player "+player.getId()+" wins!");
+					}
+
 				}
 			}
 
@@ -197,8 +208,10 @@ public class BlackjackAppMultiplayer {
 		System.out.println("**Round over, cards in, please**");
 
 		table.getDealer().clearHand();
+		table.getDealer().resetHandIsDone();
 		for (Player player : table.getPlayersList()) {
 			player.clearHand();
+			player.resetHandIsDone();
 		}
 
 		table.getDealer().newDeckCheck();
