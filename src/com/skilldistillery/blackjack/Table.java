@@ -34,5 +34,27 @@ public class Table {
 	public Dealer getDealer() {
 		return dealer;
 	}
+	
+	public boolean playerMustCompareToDealer() {
+		boolean done = false;
+		
+		// this method will be used to decide if the dealer needs to bother hitting, assuming dealer didn't get blackjack
+		// idea is that if any player needs to have their score checked (i.e. doesn't have 21 OR busted)
+		// should return true if dealer needs to hit
+		
+		if (dealer.dealerBusts()) {
+			return false;
+		}
+		
+		for (Player player : players) {
+			if (!(player.playerHandValue() == 21 || player.playerBusts())) {
+				return true;
+			}
+		}
+		
+		
+		
+		return done;
+	}
 
 }

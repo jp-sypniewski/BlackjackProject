@@ -12,8 +12,8 @@ public class BlackjackAppMultiplayer {
 	private boolean gameMustContinue;
 
 	public static void main(String[] args) {
-		BlackjackAppMultiplayer bja = new BlackjackAppMultiplayer();
-		bja.run();
+		BlackjackAppMultiplayer bjam = new BlackjackAppMultiplayer();
+		bjam.run();
 	}
 
 	public void run() {
@@ -35,34 +35,26 @@ public class BlackjackAppMultiplayer {
 
 				for (Player player : table.getPlayersList()) {
 
-					// check dealer+player blackjack
 
 					if (player.playerHandValue() == 21) {
-						// player and dealer blackjack
 						System.out.println("Player " + player.getId() + ": Push");
 					} else {
-						// dealer only blackjack
 						System.out.println("Player " + player.getId() + ": Loss");
 					}
 				}
 				gameMustContinue = false;
 			}
 
-			// player only blackjack
-
-//			if (player.playerHandValue() == 21 && dealer.dealerHandValue() != 21) {
-//				System.out.println("Blackjack!  Player wins!");
-//				gameMustContinue = false;
-//			}
-
-			// if (neither dealer nor player blackjack)
-			// player can hit as long as player doesn't bust
-
 			if (gameMustContinue) {
 				for (Player player : table.getPlayersList()) {
+					
+					// check player blackjack
+					
 					if (player.playerHandValue() == 21) {
 						System.out.println("Player " + player.getId() + ": Blackjack!");
 					} else {
+						
+						// or player gets to hit until bust
 
 						while (!player.playerBusts()) {
 
@@ -78,7 +70,7 @@ public class BlackjackAppMultiplayer {
 								kb.next();
 							}
 
-							// player hits TODO add try catch on above input
+							// player hits
 
 							if (input == 1) {
 								System.out.println(table.getDealer().playerHits(player));
@@ -94,7 +86,6 @@ public class BlackjackAppMultiplayer {
 
 							if (player.playerBusts()) {
 								System.out.println("Player " + player.getId() + " busts.");
-								gameMustContinue = false;
 								break;
 							}
 						}
@@ -106,20 +97,21 @@ public class BlackjackAppMultiplayer {
 			// dealer hits according to rules (if hand value less than 17, or 17 with soft
 			// ace)
 
-			if (gameMustContinue) {
+			if (table.playerMustCompareToDealer()) {
 
-				dealer.printFullHand();
-				while (dealer.dealerHandValue() < 17 || dealer.hasSoftSeventeen()) {
+				table.getDealer().printFullHand();
+				while (dealer.dealerHandValue() < 17 || table.getDealer().hasSoftSeventeen()) {
 					System.out.println("Dealer must hit.");
-					System.out.println(dealer.dealerHits());
-					System.out.println("Dealer is now at: " + dealer.dealerHandValue());
+					System.out.println(table.getDealer().dealerHits());
+					System.out.println("Dealer is now at: " + table.getDealer().dealerHandValue());
 				}
 
 				// check dealer bust after hit
 
-				if (dealer.dealerBusts()) {
-					System.out.println("Dealer busts, player wins!");
-					gameMustContinue = false;
+				if (table.getDealer().dealerBusts()) {
+					
+					// TODO can provide win condition to non-blackjack non-busted players here
+					
 				}
 			}
 
@@ -137,7 +129,7 @@ public class BlackjackAppMultiplayer {
 				}
 			}
 
-			// player choice to re-deal TODO add try catch for input
+			// player choice to re-deal
 
 			System.out.println("Play again?\t[Enter Integer]");
 			System.out.println("1: Sure!");
