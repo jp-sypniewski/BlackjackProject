@@ -29,64 +29,75 @@ public class BlackjackAppMultiplayer {
 
 			// dealer blackjack
 
-			if (dealer.dealerHandValue() == 21) {
+			if (table.getDealer().dealerHandValue() == 21) {
 
-				// check dealer+player blackjack
+				System.out.println("Dealer has Blackjack.");
 
-				if (player.playerHandValue() == 21) {
-					// player and dealer blackjack
-					System.out.println("Push, dealer and player both have blackjack.");
-				} else {
-					// dealer only blackjack
-					System.out.println("Dealer has blackjack, player loses.");
+				for (Player player : table.getPlayersList()) {
+
+					// check dealer+player blackjack
+
+					if (player.playerHandValue() == 21) {
+						// player and dealer blackjack
+						System.out.println("Player " + player.getId() + ": Push");
+					} else {
+						// dealer only blackjack
+						System.out.println("Player " + player.getId() + ": Loss");
+					}
 				}
-
 				gameMustContinue = false;
 			}
 
 			// player only blackjack
 
-			if (player.playerHandValue() == 21 && dealer.dealerHandValue() != 21) {
-				System.out.println("Blackjack!  Player wins!");
-				gameMustContinue = false;
-			}
+//			if (player.playerHandValue() == 21 && dealer.dealerHandValue() != 21) {
+//				System.out.println("Blackjack!  Player wins!");
+//				gameMustContinue = false;
+//			}
 
 			// if (neither dealer nor player blackjack)
 			// player can hit as long as player doesn't bust
 
 			if (gameMustContinue) {
-
-				while (!player.playerBusts() && dealer.dealerHandValue() != 21) {
-
-					System.out.println("How would player like to proceed?\t[Enter Integer]");
-					System.out.println("1: Hit");
-					System.out.println("2: Stay");
-
-					try {
-						input = kb.nextInt();
-					} catch (InputMismatchException e) {
-						System.err.println("WRONG INPUT TYPE");
-						kb.next();
-					}
-
-					// player hits TODO add try catch on above input
-
-					if (input == 1) {
-						System.out.println(dealer.playerHits(player));
-						System.out.println("Player is now at: " + player.playerHandValue());
-
-						// any input other than 1
-
+				for (Player player : table.getPlayersList()) {
+					if (player.playerHandValue() == 21) {
+						System.out.println("Player " + player.getId() + ": Blackjack!");
 					} else {
-						break;
-					}
 
-					// check player bust after hit
+						while (!player.playerBusts()) {
 
-					if (player.playerBusts()) {
-						System.out.println("Player busts, dealer wins");
-						gameMustContinue = false;
-						break;
+							System.out.println(
+									"How would player " + player.getId() + " like to proceed?\t[Enter Integer]");
+							System.out.println("1: Hit");
+							System.out.println("2: Stay");
+
+							try {
+								input = kb.nextInt();
+							} catch (InputMismatchException e) {
+								System.err.println("WRONG INPUT TYPE");
+								kb.next();
+							}
+
+							// player hits TODO add try catch on above input
+
+							if (input == 1) {
+								System.out.println(table.getDealer().playerHits(player));
+								System.out.println("Player is now at: " + player.playerHandValue());
+
+								// any input other than 1
+
+							} else {
+								break;
+							}
+
+							// check player bust after hit
+
+							if (player.playerBusts()) {
+								System.out.println("Player " + player.getId() + " busts.");
+								gameMustContinue = false;
+								break;
+							}
+						}
 					}
 				}
 			}

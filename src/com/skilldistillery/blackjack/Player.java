@@ -1,13 +1,17 @@
 package com.skilldistillery.blackjack;
 
 public class Player {
+	private int id;
 	private BlackjackHand hand;
 	private boolean continuePlaying;
 	private boolean softAce = false;
+	private static int idCount = 0;
 
 	public Player() {
 		hand = new BlackjackHand();
 		continuePlaying = true;
+		id = idCount;
+		idCount++;
 	}
 
 	public int playerHandValue() {
@@ -46,6 +50,10 @@ public class Player {
 
 	public boolean getContinuePlaying() {
 		return continuePlaying;
+	}
+	
+	public int getId() {
+		return id;
 	}
 
 }
