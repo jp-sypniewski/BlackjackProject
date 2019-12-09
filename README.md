@@ -36,3 +36,5 @@ Each App class prompts the player for their choice of hit or stay for a given ha
     - In moving from the PlayerVDealerBlackjackApp to the BlackjackApp, classes for a Player and a Dealer were added.  These two classes contain functionality previously within the run() method.  The logic of the game within the run() in BlackjackApp is easier to follow as a result.
 - Manipulation of values from enums
   - With a soft ace, the sum value of a blackjack hand can be 10 less than a hard ace at 11.  Since the enum has a final value of 11, the value calculation takes into account the total value of the hand and provides for scenarios in which an ace value of 1 is needed.
+- Simplify logic where possible
+  - The BlackjackApp was using multiple booleans to determine whether the dealer needed to draw and then compare the players score with the dealer.  By reframing the logic of the statements into a single continue boolean, the program becomes more simple.

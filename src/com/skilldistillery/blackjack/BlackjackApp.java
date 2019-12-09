@@ -1,5 +1,6 @@
 package com.skilldistillery.blackjack;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class BlackjackApp {
@@ -18,63 +19,68 @@ public class BlackjackApp {
 		dealer = new Dealer();
 		player = new Player();
 		kb = new Scanner(System.in);
-		
+
 		startUp();
 
 		do {
 			roundSetup();
-			
+
 			// dealer blackjack
 
 			if (dealer.dealerHandValue() == 21) {
-				
+
 				// check dealer+player blackjack
-				
+
 				if (player.playerHandValue() == 21) {
 					// player and dealer blackjack
 					System.out.println("Push, dealer and player both have blackjack.");
-				}
-				else {
+				} else {
 					// dealer only blackjack
 					System.out.println("Dealer has blackjack, player loses.");
 				}
-				
+
 				gameMustContinue = false;
 			}
-			
+
 			// player only blackjack
-			
+
 			if (player.playerHandValue() == 21 && dealer.dealerHandValue() != 21) {
 				System.out.println("Blackjack!  Player wins!");
 				gameMustContinue = false;
-			} 
-			
-				
+			}
+
 			// if (neither dealer nor player blackjack)
 			// player can hit as long as player doesn't bust
-			
+
 			if (gameMustContinue) {
-				
-				while (!player.playerBusts() && dealer.dealerHandValue()!=21) {
+
+				while (!player.playerBusts() && dealer.dealerHandValue() != 21) {
+
 					System.out.println("How would player like to proceed?\t[Enter Integer]");
 					System.out.println("1: Hit");
 					System.out.println("2: Stay");
-					input = kb.nextInt();
-					
+
+					try {
+						input = kb.nextInt();
+					} catch (InputMismatchException e) {
+						System.err.println("WRONG INPUT TYPE");
+						kb.next();
+					}
+
 					// player hits TODO add try catch on above input
-					
+
 					if (input == 1) {
 						System.out.println(dealer.playerHits(player));
 						System.out.println("Player is now at: " + player.playerHandValue());
-						
+
 						// any input other than 1
-						
+
 					} else {
 						break;
 					}
-					
+
 					// check player bust after hit
-					
+
 					if (player.playerBusts()) {
 						System.out.println("Player busts, dealer wins");
 						gameMustContinue = false;
@@ -82,9 +88,10 @@ public class BlackjackApp {
 					}
 				}
 			}
-			
+
 			// if (neither dealer nor player blackjack, player not busted)
-			// dealer hits according to rules (if hand value less than 17, or 17 with soft ace)
+			// dealer hits according to rules (if hand value less than 17, or 17 with soft
+			// ace)
 
 			if (gameMustContinue) {
 
@@ -94,7 +101,7 @@ public class BlackjackApp {
 					System.out.println(dealer.dealerHits());
 					System.out.println("Dealer is now at: " + dealer.dealerHandValue());
 				}
-				
+
 				// check dealer bust after hit
 
 				if (dealer.dealerBusts()) {
@@ -102,7 +109,7 @@ public class BlackjackApp {
 					gameMustContinue = false;
 				}
 			}
-			
+
 			// if (neither dealer nor player blackjack, neither player bust)
 			// compare hand values to determine winner
 
@@ -116,37 +123,42 @@ public class BlackjackApp {
 					System.out.println("Player wins!");
 				}
 			}
-			
-			// player choice to redeal TODO add try catch for input
+
+			// player choice to re-deal TODO add try catch for input
 
 			System.out.println("Play again?\t[Enter Integer]");
 			System.out.println("1: Sure!");
 			System.out.println("2: Nah.");
-			input = kb.nextInt();
+			try {
+				input = kb.nextInt();
+			} catch (InputMismatchException e) {
+				System.err.println("WRONG INPUT TYPE");
+				kb.next();
+			}
+
 			if (input == 1) {
 				System.out.println("Sounds good.");
-			}
-			else if (input == 2) {
-				
+			} else if (input == 2) {
+
 				// player quits out
-				
+
 				System.out.println("Bye.");
 				player.playerQuits();
 				kb.close();
 			}
-			
+
 			// clear hands, check if new deck is needed
-			
+
 			roundCleanup();
 
 		} while (player.getContinuePlaying());
-		
+
 		// END RUN
 
 	}
-	
+
 	public void startUp() {
-		
+
 		System.out.println("Welcome to BlackjackApp!");
 		System.out.println("In this game, there is one player against the dealer.");
 		System.out.println("If the player and dealer are both dealt Blackjack, the game is a push");
@@ -157,13 +169,13 @@ public class BlackjackApp {
 		System.out.println("On the flop, the dealer will display their second card dealt unless");
 		System.out.println("\tthe second card is of value ten or an ace");
 		System.out.println("Six decks are used, with a new shoe generated upon usage of 80% of the shoe");
-		
+
 	}
-	
+
 	public void roundSetup() {
-		
+
 		System.out.println("**Dealing a new hand**");
-		
+
 		gameMustContinue = true;
 
 		dealer.deal(player);
@@ -171,15 +183,15 @@ public class BlackjackApp {
 		dealer.printHandAfterDeal();
 		player.printHand();
 	}
-	
+
 	public void roundCleanup() {
-		
+
 		System.out.println("**Round over, cards in, please**");
-		
+
 		dealer.clearHand();
 		player.clearHand();
 		dealer.newDeckCheck();
-		
+
 	}
 
 }
