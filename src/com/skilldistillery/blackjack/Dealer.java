@@ -23,6 +23,15 @@ public class Dealer {
 			hand.addCard(deck.dealCard());
 		}
 	}
+	
+	public void deal(Table table) {
+		for (int i = 0; i < 2; i++) {
+			for(Player player : table.getPlayersList()) {
+				player.takeCard(deck.dealCard());
+			}			
+			hand.addCard(deck.dealCard());
+		}
+	}
 
 	public Card playerHits(Player player) {
 		System.out.println("Player is dealt:");
