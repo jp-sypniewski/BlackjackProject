@@ -64,7 +64,6 @@ public class BlackjackApp {
 					// player hits TODO add try catch on above input
 					
 					if (input == 1) {
-						System.out.println("Dealer gives: ");
 						System.out.println(dealer.playerHits(player));
 						System.out.println("Player is now at: " + player.playerHandValue());
 						
@@ -150,7 +149,14 @@ public class BlackjackApp {
 		
 		System.out.println("Welcome to BlackjackApp!");
 		System.out.println("In this game, there is one player against the dealer.");
-		System.out.println("If the player");
+		System.out.println("If the player and dealer are both dealt Blackjack, the game is a push");
+		System.out.println("If the player is dealt Blackjack, the player wins");
+		System.out.println("If the dealer is dealt Blackjack, the dealer wins");
+		System.out.println("Else, the player may hit until busted, or stay with their current hand");
+		System.out.println("The dealer will hit if less than 17, or with a soft 17");
+		System.out.println("On the flop, the dealer will display their second card dealt unless");
+		System.out.println("\tthe second card is of value ten or an ace");
+		System.out.println("Six decks are used, with a new shoe generated upon usage of 80% of the shoe");
 		
 	}
 	
