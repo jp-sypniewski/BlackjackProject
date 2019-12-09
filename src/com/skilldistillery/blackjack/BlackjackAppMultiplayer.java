@@ -162,7 +162,7 @@ public class BlackjackAppMultiplayer {
 	public void startUp() {
 
 		System.out.println("Welcome to BlackjackApp!");
-		System.out.println("In this game, there is one player against the dealer.");
+		System.out.println("In this game, there are multiple (user) players against the dealer.");
 		System.out.println("If the player and dealer are both dealt Blackjack, the game is a push");
 		System.out.println("If the player is dealt Blackjack, the player wins");
 		System.out.println("If the dealer is dealt Blackjack, the dealer wins");
@@ -180,19 +180,25 @@ public class BlackjackAppMultiplayer {
 
 		gameMustContinue = true;
 
-		dealer.deal(player);
+		table.getDealer().deal(table);
 
-		dealer.printHandAfterDeal();
-		player.printHand();
+		table.getDealer().printHandAfterDeal();
+
+		for (Player player : table.getPlayersList()) {
+			player.printHand();
+		}
 	}
 
 	public void roundCleanup() {
 
 		System.out.println("**Round over, cards in, please**");
 
-		dealer.clearHand();
-		player.clearHand();
-		dealer.newDeckCheck();
+		table.getDealer().clearHand();
+		for (Player player : table.getPlayersList()) {
+			player.clearHand();
+		}
+
+		table.getDealer().newDeckCheck();
 
 	}
 
