@@ -69,7 +69,7 @@ public class PlayerVDealerBlackjackApp {
 					}
 				}
 				
-				// player dealt blackjack check
+				// check for player blackjack
 				
 				if (playerHand.isBlackjack()) {
 					System.out.println("BLACKJACK! Player wins!");
