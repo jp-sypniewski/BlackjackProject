@@ -5,11 +5,9 @@ import java.util.Scanner;
 
 public class BlackjackAppMultiplayer {
 	private Table table;
-	private Dealer dealer;
 	private Player player;
 	private Scanner kb;
 	private int input = 0;
-	private boolean gameMustContinue;
 
 	public static void main(String[] args) {
 		BlackjackAppMultiplayer bjam = new BlackjackAppMultiplayer();
@@ -18,7 +16,6 @@ public class BlackjackAppMultiplayer {
 
 	public void run() {
 		table = new Table(2);
-		dealer = new Dealer();
 		player = new Player();
 		kb = new Scanner(System.in);
 
@@ -123,51 +120,53 @@ public class BlackjackAppMultiplayer {
 			// compare hand values to determine winner
 
 			if (table.playerMustCompareToDealer()) {
-				
+
 				System.out.println("Dealer: " + table.getDealer().dealerHandValue());
-				
+
 				for (Player player : table.getPlayersList()) {
 
-					System.out.println("Player "+player.getId()+": " + player.playerHandValue());
+					System.out.println("Player " + player.getId() + ": " + player.playerHandValue());
 					if (table.getDealer().dealerHandValue() == player.playerHandValue()) {
 						System.out.println("Push");
 					} else if (table.getDealer().dealerHandValue() > player.playerHandValue()) {
 						System.out.println("Dealer wins.");
 					} else {
-						System.out.println("Player "+player.getId()+" wins!");
+						System.out.println("Player " + player.getId() + " wins!");
 					}
 
 				}
 			}
 
 			// player choice to re-deal
+			for (Player player : table.getPlayersList()) {
+				
+				
+				System.out.println("Player "+player.getId()+"Play again?\t[Enter Integer]");
+				System.out.println("1: Sure!");
+				System.out.println("2: Nah.");
+				try {
+					input = kb.nextInt();
+				} catch (InputMismatchException e) {
+					System.err.println("WRONG INPUT TYPE");
+					kb.next();
+				}
 
-			System.out.println("Play again?\t[Enter Integer]");
-			System.out.println("1: Sure!");
-			System.out.println("2: Nah.");
-			try {
-				input = kb.nextInt();
-			} catch (InputMismatchException e) {
-				System.err.println("WRONG INPUT TYPE");
-				kb.next();
+				if (input == 1) {
+					System.out.println("Sounds good.");
+				} else if (input == 2) {
+
+					// player quits out
+
+					System.out.println("Bye.");
+					player.playerQuits();
+					kb.close();
+				}
 			}
-
-			if (input == 1) {
-				System.out.println("Sounds good.");
-			} else if (input == 2) {
-
-				// player quits out
-
-				System.out.println("Bye.");
-				player.playerQuits();
-				kb.close();
-			}
-
 			// clear hands, check if new deck is needed
 
 			roundCleanup();
 
-		} while (player.getContinuePlaying());
+		} while (table.getPlayersList().size() > 0);
 
 		// END RUN
 
@@ -191,8 +190,6 @@ public class BlackjackAppMultiplayer {
 	public void roundSetup() {
 
 		System.out.println("**Dealing a new hand**");
-
-		gameMustContinue = true;
 
 		table.getDealer().deal(table);
 
